@@ -8,7 +8,7 @@ export default class URLHandler extends Component {
 
   componentWillReact() {
     hashHistory.push({
-      pathname: `/${ store.zoom }/${ store.lat }/${ store.lng }/${ store.bearing }/${ store.pitch }/app`,
+      pathname: `/${ store.zoom }/${ store.lat }/${ store.lng }/app`,
       query: {
         search: store.search,
         orientation: store.orientation,
@@ -23,8 +23,6 @@ export default class URLHandler extends Component {
     store.lat
     store.lng
     store.zoom
-    store.bearing
-    store.pitch
     store.orientation
     store.size
     store.material

@@ -3,19 +3,14 @@ import { Glyphicon, Input } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import { store } from '../store'
 import { Result, SearchRemove, Remove } from '../components'
-import { getBounds, getCenter } from './utils'
 
 @observer
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
-    this.getLocation = this.getLocation.bind(this)
-    this.handleKeyEnter = this.handleKeyEnter.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
-  getLocation(location) {
+  getLocation = (location) => {
     let bounds = map.getBounds()
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${ location }&bounds=${ bounds._ne.lat },${ bounds._ne.lng }|${ bounds._sw.lat },${ bounds._sw.lng }`
     fetch(url).then(response => response.json())
@@ -25,7 +20,7 @@ export default class Search extends React.Component {
       .catch(error => console.log("Error found"))
   }
 
-  handleKeyEnter(e) {
+  handleKeyEnter = (e) => {
     let result = store.results[store.selection]
     if (result) {
       let bounds = getBounds(result.geometry)
@@ -36,13 +31,13 @@ export default class Search extends React.Component {
     }
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = (e) => {
     if (e.key == 'Enter') this.handleKeyEnter()
     if (e.key == 'ArrowDown') store.selection = Math.min(store.results.length, store.selection + 1)
     if (e.key == 'ArrowUp') store.selection = Math.max(0, store.selection - 1)
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     store.selection = 0
     store.search = e.target.value
     if (store.search) this.getLocation(store.search)

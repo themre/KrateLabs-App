@@ -2,20 +2,12 @@ import React, { Component } from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import { store } from '../store'
+import SGMap from './SGMap'
+import DevTools from 'mobx-react-devtools';
 import {
-  Map,
   Logo,
-  Search,
-  getBounds,
-  NorthArrow,
-  TitlView,
-  ZoomIn,
-  ZoomOut,
   Options,
   Checkout,
-  Basemap,
-  BoundingBox,
-  PanDown,
   Price,
   URLHandler } from '../components'
 
@@ -24,6 +16,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
 
+    this.handlers = {}
     // Store all URL Queries into MobX Store
     Object.keys(props.location.query).map((key) => {
       store[key] = props.location.query[key]
@@ -33,6 +26,22 @@ export default class App extends Component {
     Object.keys(props.params).map((key) => {
       store[key] = props.params[key]
     })
+  }
+
+  registerHandler = (key, handler) => {
+    this.handlers[key] = handler
+  }
+  changeParams = (stateDelta) => {
+    const {handlers} = this
+    this.setState(stateDelta, () => {
+      for (let handler in handlers) {
+        handlers[handler]()
+      }
+    })
+  }
+
+  showStore = () => {
+    console.log(store.lat, store.lng)
   }
 
   render() {
@@ -61,24 +70,18 @@ export default class App extends Component {
         <Row style={ styles.row }>
           { /* App */ }
           <URLHandler />
-
+          <DevTools />
           { /* Map */ }
           <Col xs={12} sm={8} md={8} lg={9} style={ styles.left }>
-            <Map>
-              <NorthArrow />
-              <TitlView />
-              <ZoomIn />
-              <ZoomOut />
-              <Basemap />
-              <Search />
-            </Map>
-            <PanDown />
-            <Logo />
+            <SGMap
+              changeHandlers={this} />
+
           </Col>
 
           { /* Options */ }
           <Col xs={12} sm={4} md={4} lg={3} style={ styles.right }>
-            <Options />
+            <Options 
+              showStore={this.showStore}/>
             <Price />
             <Checkout />
           </Col>

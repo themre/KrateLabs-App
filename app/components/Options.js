@@ -32,6 +32,7 @@ export default class Options extends React.Component {
 
     return (
       <div style={ styles.container }>
+        <button onClick={this.props.showStore}>show</button>
         <h2 style={ styles.title }>Options</h2>
 
         { /* Page Orientation */ }

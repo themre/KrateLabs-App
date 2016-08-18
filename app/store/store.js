@@ -1,11 +1,18 @@
 import { observable, computed } from 'mobx'
 import validator from 'validator'
+import moment from 'moment'
 
 export const store = new class Store {
   // API
   api_url = 'https://api.kratelabs.addxy.com'
   @observable svg = ''
   @observable png = ''
+
+  //CUSTOM
+  @observable maxDate = moment().format("YYYY-MM-DD")
+  @observable selectedDate = moment().format("YYYY-MM-DD")
+  @observable minDate = "2015-01-01"
+  @observable availableDays:array = []
   
   // HTML
   @observable height = window.innerHeight
@@ -19,24 +26,17 @@ export const store = new class Store {
   // App Options
   @observable orientation = 1
   @observable material = 1
-  @observable size = 1
+  @observable size:number = 1
   @observable email = ''
 
   // Map
-  @observable zoom = 12
-  @observable lat = 43.650128
-  @observable lng = -79.382185
+  @observable zoom:number = 12
+  @observable opacity:number = 50
+  @observable lat:number = 43.650128
+  @observable lng:number = -79.382185
   @observable bearing = 0.0
   @observable pitch = 0.0
   @observable style = 1
-  @observable mapId = 'map'
-  @observable token = 'pk.eyJ1IjoiYWRkeHkiLCJhIjoiY2lsdmt5NjZwMDFsdXZka3NzaGVrZDZtdCJ9.ZUE-LebQgHaBduVwL68IoQ'
-
-  styleTable = {
-    1: 'mapbox://styles/addxy/ciq40e6zx0010bkmbbo513b6s',
-    2: 'mapbox://styles/mapbox/outdoors-v9',
-    3: 'mapbox://styles/mapbox/satellite-streets-v9'
-  }
 
   sizeTable = {
     1: {1: '24" x 18"', 2: '18" x 24"'},

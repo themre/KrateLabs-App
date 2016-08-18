@@ -14,14 +14,6 @@
     "zoom": 14.072520520122,
     "bearing": 0,
     "pitch": 0,
-    "sources": {
-        "composite": {
-            "url": "mapbox://mapbox.mapbox-streets-v7",
-            "type": "vector"
-        }
-    },
-    "sprite": "mapbox://sprites/addxy/ciq4i1vdo001jb2niy9z38i9a",
-    "glyphs": "mapbox://fonts/addxy/{fontstack}/{range}.pbf",
     "layers": [
         {
             "id": "background",
